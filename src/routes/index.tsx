@@ -143,7 +143,9 @@ const contactInfo = [
     icon: MapPin,
     label: "Address",
     value: "Warehouse 01, Warsan 1 St – behind Dubai Textile City – Warsan First – Dubai International City – Dubai",
-    href: "https://maps.google.com/?q=Warehouse+01+Warsan+1+St+behind+Dubai+Textile+City+Warsan+First+Dubai+International+City+Dubai",
+    href: "https://www.google.com/maps/dir/?api=1&destination=25.1737642,55.4168449&destination_place_id=ChIJsZAH9ThhXz4RQNgzW07ERiQ",
+    target: "_top",
+    rel: "noreferrer",
   },
   {
     icon: Phone,
