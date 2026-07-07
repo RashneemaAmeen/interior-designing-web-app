@@ -666,15 +666,24 @@ function Index() {
                   <p className="font-display text-lg text-card-foreground">Visit Our Studio</p>
                   <p className="text-sm text-muted-foreground">Warehouse 01, Warsan 1 St, Dubai International City</p>
                 </div>
-                <a
-                  href="https://www.google.com/maps/dir/?api=1&destination=25.1737642,55.4168449&destination_place_id=ChIJsZAH9ThhXz4RQNgzW07ERiQ"
-                  target="_top"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-charcoal transition-colors hover:bg-gold-light"
-                >
-                  <MapPin size={16} />
-                  Get Directions
-                </a>
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href="https://www.google.com/maps/dir/?api=1&destination=25.1737642,55.4168449&destination_place_id=ChIJsZAH9ThhXz4RQNgzW07ERiQ"
+                    target="_top"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-charcoal transition-colors hover:bg-gold-light"
+                  >
+                    <MapPin size={16} />
+                    Get Directions
+                  </a>
+                  <button
+                    type="button"
+                    onClick={copyAddress}
+                    className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+                  >
+                    {copied ? "Copied!" : "Copy Address"}
+                  </button>
+                </div>
               </div>
             </div>
           </Reveal>
