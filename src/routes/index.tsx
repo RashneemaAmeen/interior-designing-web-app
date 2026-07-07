@@ -167,11 +167,18 @@ const contactInfo = [
 function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mapAllowed, setMapAllowed] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+
+    const hostname = window.location.hostname;
+    setMapAllowed(
+      hostname.endsWith(".lovable.app") || hostname.endsWith(".lovableproject.com")
+    );
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -616,14 +623,26 @@ function Index() {
           <Reveal className="mt-12">
             <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:border-gold/30 hover:shadow-xl">
               <div className="relative aspect-[16/9] w-full sm:aspect-[21/9]">
-                <iframe
-                  title="Spectra Interior Designing location on Google Maps"
-                  src="https://maps.google.com/maps?q=Warehouse%2001%20Warsan%201%20St%20behind%20Dubai%20Textile%20City%20Warsan%20First%20Dubai%20International%20City%20Dubai&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                  className="absolute inset-0 h-full w-full border-0"
-                  loading="lazy"
-                  allowFullScreen
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+                {mapAllowed ? (
+                  <iframe
+                    title="Spectra Interior Designing location on Google Maps"
+                    src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_LOVABLE_CONNECTOR_GOOGLE_MAPS_BROWSER_KEY}&q=place_id:ChIJsZAH9ThhXz4RQNgzW07ERiQ&zoom=15&maptype=roadmap`}
+                    className="absolute inset-0 h-full w-full border-0"
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                ) : (
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-muted p-8 text-center">
+                    <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-gold/10 text-gold">
+                      <MapPin size={32} strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <p className="font-display text-lg text-card-foreground">Find Us on Google Maps</p>
+                      <p className="text-sm text-muted-foreground">Interactive map is live on the published site</p>
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="flex flex-col items-start justify-between gap-4 border-t border-border px-6 py-5 sm:flex-row sm:items-center">
                 <div>
@@ -631,7 +650,7 @@ function Index() {
                   <p className="text-sm text-muted-foreground">Warehouse 01, Warsan 1 St, Dubai International City</p>
                 </div>
                 <a
-                  href="https://maps.google.com/?q=Warehouse+01+Warsan+1+St+behind+Dubai+Textile+City+Warsan+First+Dubai+International+City+Dubai"
+                  href="https://www.google.com/maps/dir/?api=1&destination=25.1737642,55.4168449&destination_place_id=ChIJsZAH9ThhXz4RQNgzW07ERiQ"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-charcoal transition-colors hover:bg-gold-light"
