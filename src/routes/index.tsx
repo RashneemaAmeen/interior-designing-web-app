@@ -651,15 +651,28 @@ function Index() {
                     referrerPolicy="no-referrer-when-downgrade"
                   />
                 ) : (
-                  <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-muted p-8 text-center">
-                    <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-gold/10 text-gold">
-                      <MapPin size={32} strokeWidth={1.5} />
+                  <a
+                    href="https://www.google.com/maps/dir/?api=1&destination=25.1737642,55.4168449&destination_place_id=ChIJsZAH9ThhXz4RQNgzW07ERiQ"
+                    target="_top"
+                    rel="noreferrer"
+                    className="group relative block h-full w-full overflow-hidden"
+                  >
+                    <img
+                      src={locationMapAsset.url}
+                      alt="Map showing Warehouse 01, Warsan 1 St, Dubai International City"
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      width={1200}
+                      height={600}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-charcoal/10 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
+                      <div className="inline-flex items-center gap-2 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-charcoal transition-colors group-hover:bg-gold-light">
+                        <MapPin size={16} />
+                        Open in Google Maps
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-display text-lg text-card-foreground">Find Us on Google Maps</p>
-                      <p className="text-sm text-muted-foreground">Interactive map is live on the published site</p>
-                    </div>
-                  </div>
+                  </a>
                 )}
               </div>
               <div className="flex flex-col items-start justify-between gap-4 border-t border-border px-6 py-5 sm:flex-row sm:items-center">
