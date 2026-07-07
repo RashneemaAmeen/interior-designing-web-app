@@ -485,26 +485,25 @@ function Index() {
             </h2>
           </div>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {testimonials.map((testimonial) => (
-              <div
-                key={testimonial.name}
-                className="relative rounded-xl border border-border bg-card p-8"
-              >
-                <Quote className="absolute top-6 right-6 text-gold/20" size={40} />
-                <p className="relative z-10 text-card-foreground leading-relaxed">
-                  &ldquo;{testimonial.text}&rdquo;
-                </p>
-                <div className="mt-6 flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted font-display text-lg text-gold">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-display text-base text-card-foreground">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+          <div className="mt-14 grid items-stretch gap-6 md:grid-cols-3">
+            {testimonials.map((testimonial, i) => (
+              <Reveal key={testimonial.name} delay={i * 100} className="h-full">
+                <div className="relative flex h-full flex-col rounded-2xl border border-border bg-card p-8 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-charcoal/10">
+                  <Quote className="absolute top-6 right-6 text-gold/20" size={40} />
+                  <p className="relative z-10 flex-1 text-card-foreground leading-relaxed">
+                    &ldquo;{testimonial.text}&rdquo;
+                  </p>
+                  <div className="mt-6 flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted font-display text-lg text-gold">
+                      {testimonial.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-display text-base text-card-foreground">{testimonial.name}</p>
+                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
