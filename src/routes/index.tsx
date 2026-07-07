@@ -457,20 +457,19 @@ function Index() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {whyUs.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-xl border border-cream/10 bg-cream/5 p-6 transition-all hover:border-gold/30 hover:bg-cream/10"
-              >
-                <div className="inline-flex items-center justify-center rounded-full bg-gold/20 p-3 text-gold">
-                  <item.icon size={26} strokeWidth={1.5} />
+          <div className="mt-14 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {whyUs.map((item, i) => (
+              <Reveal key={item.title} delay={i * 80} className="h-full">
+                <div className="flex h-full flex-col rounded-2xl border border-cream/10 bg-cream/5 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-gold/40 hover:bg-cream/10 hover:shadow-xl hover:shadow-black/20">
+                  <div className="inline-flex w-fit items-center justify-center rounded-full bg-gold/20 p-3 text-gold">
+                    <item.icon size={26} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="mt-5 font-display text-lg text-cream">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-cream/70">
+                    {item.description}
+                  </p>
                 </div>
-                <h3 className="mt-5 font-display text-lg text-cream">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-cream/70">
-                  {item.description}
-                </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
