@@ -20,6 +20,7 @@ import {
   Quote,
   House,
 } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 import heroAsset from "@/assets/hero.jpg.asset.json";
 import project1Asset from "@/assets/project-1.jpg.asset.json";
