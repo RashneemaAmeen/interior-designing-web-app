@@ -81,10 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Spectra Interior Designing creates luxurious, timeless interiors in Dubai. Residential, commercial, kitchen, bedroom, office design and 3D visualization." },
       { name: "author", content: "Spectra Interior Designing" },
       { property: "og:title", content: "Spectra Interior Designing | Dubai Luxury Interiors" },
-      { property: "og:description", content: "Designing Spaces, Creating Memories. Luxury interior design studio in Dubai, UAE." },
+      { property: "og:description", content: "Spectra Interior Designing creates luxurious, timeless interiors in Dubai. Residential, commercial, kitchen, bedroom, office design and 3D visualization." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@SpectraInterior" },
+      { name: "twitter:title", content: "Spectra Interior Designing | Dubai Luxury Interiors" },
+      { name: "twitter:description", content: "Spectra Interior Designing creates luxurious, timeless interiors in Dubai. Residential, commercial, kitchen, bedroom, office design and 3D visualization." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2a382217-9635-4652-82bd-aee642905e99/id-preview-6de4e6a5--f99b8549-968a-494a-b262-284f4fef4b51.lovable.app-1783421598669.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2a382217-9635-4652-82bd-aee642905e99/id-preview-6de4e6a5--f99b8549-968a-494a-b262-284f4fef4b51.lovable.app-1783421598669.png" },
     ],
     links: [
       {
