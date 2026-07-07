@@ -169,7 +169,7 @@ function Index() {
     <div id="home" className="min-h-screen bg-background">
       {/* Header */}
       <header className="fixed inset-x-0 top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
-        <div className="mx-auto flex max-w-7xl items-center justify-between container-px py-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
           <a href="#home" className="flex items-center gap-2">
             <span className="font-display text-xl sm:text-2xl font-semibold tracking-tight text-foreground">
               Spectra
@@ -210,7 +210,7 @@ function Index() {
         {/* Mobile menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden border-t border-border bg-background">
-            <nav className="flex flex-col container-px py-4">
+            <nav className="flex flex-col px-4 sm:px-6 lg:px-8 py-4">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
@@ -279,7 +279,7 @@ function Index() {
 
       {/* Services */}
       <section id="services" className="py-20 sm:py-28 bg-background">
-        <div className="mx-auto max-w-7xl container-px">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">What We Do</p>
             <h2 className="mt-3 font-display text-3xl text-foreground sm:text-4xl md:text-5xl">
@@ -313,7 +313,7 @@ function Index() {
 
       {/* Projects */}
       <section id="projects" className="py-20 sm:py-28 bg-muted/30">
-        <div className="mx-auto max-w-7xl container-px">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Portfolio</p>
             <h2 className="mt-3 font-display text-3xl text-foreground sm:text-4xl md:text-5xl">
@@ -353,7 +353,7 @@ function Index() {
 
       {/* About */}
       <section id="about" className="py-20 sm:py-28 bg-background">
-        <div className="mx-auto max-w-7xl container-px">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative">
               <div className="relative overflow-hidden rounded-xl">
@@ -404,7 +404,7 @@ function Index() {
 
       {/* Why Choose Us */}
       <section id="why-us" className="py-20 sm:py-28 bg-primary text-primary-foreground">
-        <div className="mx-auto max-w-7xl container-px">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Why Spectra</p>
             <h2 className="mt-3 font-display text-3xl text-cream sm:text-4xl md:text-5xl">
@@ -436,7 +436,7 @@ function Index() {
 
       {/* Testimonials */}
       <section id="testimonials" className="py-20 sm:py-28 bg-background">
-        <div className="mx-auto max-w-7xl container-px">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Client Stories</p>
             <h2 className="mt-3 font-display text-3xl text-foreground sm:text-4xl md:text-5xl">
@@ -471,7 +471,7 @@ function Index() {
 
       {/* Contact */}
       <section id="contact" className="py-20 sm:py-28 bg-muted/30">
-        <div className="mx-auto max-w-7xl container-px">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Get in Touch</p>
             <h2 className="mt-3 font-display text-3xl text-foreground sm:text-4xl md:text-5xl">
@@ -575,7 +575,7 @@ function Index() {
 
       {/* Footer */}
       <footer className="border-t border-border bg-background py-12">
-        <div className="mx-auto max-w-7xl container-px">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left">
             <div>
               <p className="font-display text-xl text-foreground">
