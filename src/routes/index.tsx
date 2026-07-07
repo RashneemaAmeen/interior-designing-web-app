@@ -29,6 +29,7 @@ import project3Asset from "@/assets/project-3.jpg.asset.json";
 import project4Asset from "@/assets/project-4.jpg.asset.json";
 import project5Asset from "@/assets/project-5.jpg.asset.json";
 import project6Asset from "@/assets/project-6.jpg.asset.json";
+import locationMapAsset from "@/assets/location-map.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
