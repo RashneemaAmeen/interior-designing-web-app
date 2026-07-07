@@ -142,7 +142,8 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Address",
-    value: "Office No. 4, Twin Tower, International City, Dubai, UAE",
+    value: "Warehouse 01, Warsan 1 St – behind Dubai Textile City – Warsan First – Dubai International City – Dubai",
+    href: "https://maps.google.com/?q=Warehouse+01+Warsan+1+St+behind+Dubai+Textile+City+Warsan+First+Dubai+International+City+Dubai",
   },
   {
     icon: Phone,
