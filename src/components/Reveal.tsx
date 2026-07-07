@@ -2,13 +2,12 @@ import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from 
 
 type Props = {
   children: ReactNode;
-  as?: keyof React.JSX.IntrinsicElements;
   delay?: number;
   className?: string;
 };
 
-export function Reveal({ children, as = "div", delay = 0, className = "" }: Props) {
-  const ref = useRef<HTMLElement | null>(null);
+export function Reveal({ children, delay = 0, className = "" }: Props) {
+  const ref = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -33,17 +32,15 @@ export function Reveal({ children, as = "div", delay = 0, className = "" }: Prop
     return () => io.disconnect();
   }, []);
 
-  const Tag = as as string;
   const style: CSSProperties = delay ? { transitionDelay: `${delay}ms` } : {};
 
   return (
-    // @ts-expect-error dynamic tag
-    <Tag
+    <div
       ref={ref}
       style={style}
       className={`reveal ${visible ? "reveal-visible" : ""} ${className}`}
     >
       {children}
-    </Tag>
+    </div>
   );
 }
