@@ -546,6 +546,8 @@ function Index() {
                   {item.href ? (
                     <a
                       href={item.href}
+                      target={item.target || undefined}
+                      rel={item.rel || undefined}
                       className="mt-1 block font-display text-lg text-card-foreground transition-colors hover:text-gold"
                     >
                       {item.value}
