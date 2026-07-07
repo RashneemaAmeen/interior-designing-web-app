@@ -362,29 +362,33 @@ function Index() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => (
-              <div
-                key={project.title}
-                className="group relative overflow-hidden rounded-xl bg-card"
-              >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    width={944}
-                    height={704}
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-gold">{project.category}</p>
-                  <h3 className="font-display text-xl text-cream">{project.title}</h3>
-                </div>
-              </div>
-            ))}
+          <div className="mt-14 columns-1 gap-5 sm:columns-2 lg:columns-3">
+            {projects.map((project, i) => {
+              // vary aspect ratios to create true masonry feel
+              const ratios = ["aspect-[4/5]", "aspect-[4/3]", "aspect-[3/4]", "aspect-square", "aspect-[4/3]", "aspect-[3/4]"];
+              const ratio = ratios[i % ratios.length];
+              return (
+                <Reveal key={project.title} delay={(i % 3) * 100} className="mb-5 break-inside-avoid">
+                  <div className="group relative overflow-hidden rounded-2xl bg-card shadow-md transition-all duration-500 hover:shadow-2xl hover:shadow-charcoal/20">
+                    <div className={`${ratio} overflow-hidden`}>
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                      />
+                    </div>
+                    {/* Always-visible gradient on mobile, hover on desktop */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/20 to-transparent opacity-100 transition-opacity duration-500 md:opacity-0 md:group-hover:opacity-100" />
+                    <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 translate-y-0 opacity-100 transition-all duration-500 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">{project.category}</p>
+                      <h3 className="mt-1 font-display text-lg text-cream sm:text-xl">{project.title}</h3>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
