@@ -20,6 +20,7 @@ import {
   Quote,
   House,
 } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 import heroAsset from "@/assets/hero.jpg.asset.json";
 import project1Asset from "@/assets/project-1.jpg.asset.json";
@@ -298,16 +299,16 @@ function Index() {
           <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-cream/80 sm:text-base">
             Bespoke interior design for Dubai&apos;s most discerning homes and businesses. Where timeless elegance meets modern sophistication.
           </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="mt-8 flex w-full flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
             <a
               href="#contact"
-              className="inline-flex items-center justify-center rounded-md bg-gold px-8 py-3.5 text-sm font-semibold text-charcoal transition-all hover:bg-gold-light"
+              className="inline-flex w-full items-center justify-center rounded-md bg-gold px-8 py-3.5 text-base font-semibold text-charcoal shadow-lg shadow-gold/20 transition-all duration-300 hover:bg-gold-light hover:shadow-xl sm:w-auto sm:text-sm"
             >
               Book a Free Consultation
             </a>
             <a
               href="#portfolio"
-              className="inline-flex items-center justify-center rounded-md border border-cream/30 bg-transparent px-8 py-3.5 text-sm font-medium text-cream transition-all hover:bg-cream/10"
+              className="inline-flex w-full items-center justify-center rounded-md border border-cream/40 bg-transparent px-8 py-3.5 text-base font-medium text-cream transition-all duration-300 hover:bg-cream/10 sm:w-auto sm:text-sm"
             >
               View Our Work
             </a>
@@ -328,22 +329,21 @@ function Index() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service) => (
-              <div
-                key={service.title}
-                className="group rounded-xl border border-border bg-card p-8 transition-all hover:shadow-lg hover:border-gold/30"
-              >
-                <div className="inline-flex items-center justify-center rounded-lg bg-muted p-3 text-gold transition-colors group-hover:bg-gold group-hover:text-charcoal">
-                  <service.icon size={28} strokeWidth={1.5} />
+          <div className="mt-14 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {services.map((service, i) => (
+              <Reveal key={service.title} delay={i * 80} className="h-full">
+                <div className="group flex h-full flex-col rounded-2xl border border-border/70 bg-card p-8 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-gold/40 hover:shadow-2xl hover:shadow-charcoal/10">
+                  <div className="inline-flex w-fit items-center justify-center rounded-xl bg-muted p-3.5 text-gold transition-all duration-500 group-hover:scale-110 group-hover:bg-gold group-hover:text-charcoal">
+                    <service.icon size={28} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="mt-6 font-display text-xl text-card-foreground">
+                    {service.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {service.description}
+                  </p>
                 </div>
-                <h3 className="mt-5 font-display text-xl text-card-foreground">
-                  {service.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {service.description}
-                </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -362,29 +362,33 @@ function Index() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => (
-              <div
-                key={project.title}
-                className="group relative overflow-hidden rounded-xl bg-card"
-              >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    width={944}
-                    height={704}
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-gold">{project.category}</p>
-                  <h3 className="font-display text-xl text-cream">{project.title}</h3>
-                </div>
-              </div>
-            ))}
+          <div className="mt-14 columns-1 gap-5 sm:columns-2 lg:columns-3">
+            {projects.map((project, i) => {
+              // vary aspect ratios to create true masonry feel
+              const ratios = ["aspect-[4/5]", "aspect-[4/3]", "aspect-[3/4]", "aspect-square", "aspect-[4/3]", "aspect-[3/4]"];
+              const ratio = ratios[i % ratios.length];
+              return (
+                <Reveal key={project.title} delay={(i % 3) * 100} className="mb-5 break-inside-avoid">
+                  <div className="group relative overflow-hidden rounded-2xl bg-card shadow-md transition-all duration-500 hover:shadow-2xl hover:shadow-charcoal/20">
+                    <div className={`${ratio} overflow-hidden`}>
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                      />
+                    </div>
+                    {/* Always-visible gradient on mobile, hover on desktop */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/20 to-transparent opacity-100 transition-opacity duration-500 md:opacity-0 md:group-hover:opacity-100" />
+                    <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 translate-y-0 opacity-100 transition-all duration-500 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">{project.category}</p>
+                      <h3 className="mt-1 font-display text-lg text-cream sm:text-xl">{project.title}</h3>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -453,20 +457,19 @@ function Index() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {whyUs.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-xl border border-cream/10 bg-cream/5 p-6 transition-all hover:border-gold/30 hover:bg-cream/10"
-              >
-                <div className="inline-flex items-center justify-center rounded-full bg-gold/20 p-3 text-gold">
-                  <item.icon size={26} strokeWidth={1.5} />
+          <div className="mt-14 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {whyUs.map((item, i) => (
+              <Reveal key={item.title} delay={i * 80} className="h-full">
+                <div className="flex h-full flex-col rounded-2xl border border-cream/10 bg-cream/5 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-gold/40 hover:bg-cream/10 hover:shadow-xl hover:shadow-black/20">
+                  <div className="inline-flex w-fit items-center justify-center rounded-full bg-gold/20 p-3 text-gold">
+                    <item.icon size={26} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="mt-5 font-display text-lg text-cream">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-cream/70">
+                    {item.description}
+                  </p>
                 </div>
-                <h3 className="mt-5 font-display text-lg text-cream">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-cream/70">
-                  {item.description}
-                </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -482,26 +485,25 @@ function Index() {
             </h2>
           </div>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {testimonials.map((testimonial) => (
-              <div
-                key={testimonial.name}
-                className="relative rounded-xl border border-border bg-card p-8"
-              >
-                <Quote className="absolute top-6 right-6 text-gold/20" size={40} />
-                <p className="relative z-10 text-card-foreground leading-relaxed">
-                  &ldquo;{testimonial.text}&rdquo;
-                </p>
-                <div className="mt-6 flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted font-display text-lg text-gold">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-display text-base text-card-foreground">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+          <div className="mt-14 grid items-stretch gap-6 md:grid-cols-3">
+            {testimonials.map((testimonial, i) => (
+              <Reveal key={testimonial.name} delay={i * 100} className="h-full">
+                <div className="relative flex h-full flex-col rounded-2xl border border-border bg-card p-8 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-charcoal/10">
+                  <Quote className="absolute top-6 right-6 text-gold/20" size={40} />
+                  <p className="relative z-10 flex-1 text-card-foreground leading-relaxed">
+                    &ldquo;{testimonial.text}&rdquo;
+                  </p>
+                  <div className="mt-6 flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted font-display text-lg text-gold">
+                      {testimonial.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-display text-base text-card-foreground">{testimonial.name}</p>
+                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
