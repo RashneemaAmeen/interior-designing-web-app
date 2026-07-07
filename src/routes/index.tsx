@@ -688,7 +688,7 @@ function Index() {
                     className="inline-flex items-center gap-2 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-charcoal transition-colors hover:bg-gold-light"
                   >
                     <MapPin size={16} />
-                    Get Directions
+                    Open in Google Maps
                   </a>
                   <button
                     type="button"
