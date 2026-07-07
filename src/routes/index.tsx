@@ -329,22 +329,21 @@ function Index() {
             </p>
           </div>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((service) => (
-              <div
-                key={service.title}
-                className="group rounded-xl border border-border bg-card p-8 transition-all hover:shadow-lg hover:border-gold/30"
-              >
-                <div className="inline-flex items-center justify-center rounded-lg bg-muted p-3 text-gold transition-colors group-hover:bg-gold group-hover:text-charcoal">
-                  <service.icon size={28} strokeWidth={1.5} />
+          <div className="mt-14 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {services.map((service, i) => (
+              <Reveal key={service.title} delay={i * 80} className="h-full">
+                <div className="group flex h-full flex-col rounded-2xl border border-border/70 bg-card p-8 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-gold/40 hover:shadow-2xl hover:shadow-charcoal/10">
+                  <div className="inline-flex w-fit items-center justify-center rounded-xl bg-muted p-3.5 text-gold transition-all duration-500 group-hover:scale-110 group-hover:bg-gold group-hover:text-charcoal">
+                    <service.icon size={28} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="mt-6 font-display text-xl text-card-foreground">
+                    {service.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {service.description}
+                  </p>
                 </div>
-                <h3 className="mt-5 font-display text-xl text-card-foreground">
-                  {service.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {service.description}
-                </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
