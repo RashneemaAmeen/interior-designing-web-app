@@ -1,24 +1,605 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import {
+  Home,
+  Building2,
+  ChefHat,
+  BedDouble,
+  Briefcase,
+  Layers,
+  Palette,
+  Gem,
+  Clock,
+  Wallet,
+  Menu,
+  X,
+  Phone,
+  Mail,
+  MapPin,
+  Clock3,
+  Quote,
+} from "lucide-react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import heroAsset from "@/assets/hero.jpg.asset.json";
+import project1Asset from "@/assets/project-1.jpg.asset.json";
+import project2Asset from "@/assets/project-2.jpg.asset.json";
+import project3Asset from "@/assets/project-3.jpg.asset.json";
+import project4Asset from "@/assets/project-4.jpg.asset.json";
+import project5Asset from "@/assets/project-5.jpg.asset.json";
+import project6Asset from "@/assets/project-6.jpg.asset.json";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Spectra Interior Designing | Dubai Luxury Interiors" },
+      { name: "description", content: "Spectra Interior Designing creates luxurious, timeless interiors in Dubai. Residential, commercial, kitchen, bedroom, office design and 3D visualization." },
+      { property: "og:title", content: "Spectra Interior Designing | Dubai Luxury Interiors" },
+      { property: "og:description", content: "Designing Spaces, Creating Memories. Luxury interior design studio in Dubai, UAE." },
+      { property: "og:type", content: "website" },
+      { property: "og:image", content: heroAsset.url },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: heroAsset.url },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const navLinks = [
+  { label: "Home", href: "#home" },
+  { label: "Services", href: "#services" },
+  { label: "Projects", href: "#projects" },
+  { label: "About", href: "#about" },
+  { label: "Why Us", href: "#why-us" },
+  { label: "Testimonials", href: "#testimonials" },
+  { label: "Contact", href: "#contact" },
+];
+
+const services = [
+  {
+    icon: Home,
+    title: "Residential Interior Design",
+    description: "Bespoke home interiors that reflect your lifestyle and taste.",
+  },
+  {
+    icon: Building2,
+    title: "Commercial Interior Design",
+    description: "Elegant spaces that elevate brand identity and customer experience.",
+  },
+  {
+    icon: ChefHat,
+    title: "Kitchen Design",
+    description: "Functional, beautiful kitchens crafted for modern living.",
+  },
+  {
+    icon: BedDouble,
+    title: "Bedroom Design",
+    description: "Serene retreats designed for comfort and refined relaxation.",
+  },
+  {
+    icon: Briefcase,
+    title: "Office Design",
+    description: "Productive workspaces that balance professionalism and warmth.",
+  },
+  {
+    icon: Layers,
+    title: "3D Visualization",
+    description: "Photorealistic renders that bring your vision to life before build.",
+  },
+];
+
+const projects = [
+  { image: project1Asset.url, title: "Dubai Penthouse Living", category: "Residential" },
+  { image: project2Asset.url, title: "Altitude Reception", category: "Commercial" },
+  { image: project3Asset.url, title: "Marble Island Kitchen", category: "Kitchen" },
+  { image: project4Asset.url, title: "Master Suite Retreat", category: "Bedroom" },
+  { image: project5Asset.url, title: "Corporate Headquarters", category: "Office" },
+  { image: project6Asset.url, title: "Villa Visualization", category: "3D Render" },
+];
+
+const whyUs = [
+  {
+    icon: Palette,
+    title: "Creative Designs",
+    description: "Tailored concepts that blend artistry with everyday functionality.",
+  },
+  {
+    icon: Gem,
+    title: "Premium Materials",
+    description: "Hand-selected finishes and fittings sourced for lasting quality.",
+  },
+  {
+    icon: Clock,
+    title: "On-Time Delivery",
+    description: "Streamlined project management that respects your schedule.",
+  },
+  {
+    icon: Wallet,
+    title: "Affordable Pricing",
+    description: "Luxury results with transparent, competitive investment plans.",
+  },
+];
+
+const testimonials = [
+  {
+    name: "Aisha Al-Rashid",
+    role: "Villa Owner, Dubai Hills",
+    text: "Spectra transformed our villa into a sanctuary. Every detail feels intentional and luxurious.",
+  },
+  {
+    name: "Mohammed Khan",
+    role: "CEO, Altitude Holdings",
+    text: "Their team delivered a stunning office space that impressed our clients and energized our staff.",
+  },
+  {
+    name: "Sarah Williams",
+    role: "Homeowner, Palm Jumeirah",
+    text: "Professional, creative, and always on time. The 3D visuals made decisions effortless.",
+  },
+];
+
+const contactInfo = [
+  {
+    icon: MapPin,
+    label: "Address",
+    value: "Office No. 4, Twin Tower, International City, Dubai, UAE",
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+971 55 135 9965",
+    href: "tel:+971551359965",
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    value: "contact@spectrainterior.ae",
+    href: "mailto:contact@spectrainterior.ae",
+  },
+  {
+    icon: Clock3,
+    label: "Business Hours",
+    value: "Mon – Sat: 9:00 AM – 7:00 PM",
+  },
+];
+
 function Index() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div id="home" className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="fixed inset-x-0 top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
+          <a href="#home" className="flex items-center gap-2">
+            <span className="font-display text-xl sm:text-2xl font-semibold tracking-tight text-foreground">
+              Spectra
+            </span>
+            <span className="hidden sm:inline font-display text-xl sm:text-2xl font-light tracking-tight text-gold">
+              Interior
+            </span>
+          </a>
+
+          <nav className="hidden lg:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-foreground/80 transition-colors hover:text-gold"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+
+          <a
+            href="#contact"
+            className="hidden lg:inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Book Consultation
+          </a>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden inline-flex items-center justify-center rounded-md p-2 text-foreground hover:bg-muted"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t border-border bg-background">
+            <nav className="flex flex-col px-4 sm:px-6 lg:px-8 py-4">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-3 text-base font-medium text-foreground/80 transition-colors hover:text-gold border-b border-border last:border-0"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <a
+                href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mt-4 inline-flex items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                Book Consultation
+              </a>
+            </nav>
+          </div>
+        )}
+      </header>
+
+      {/* Hero */}
+      <section className="relative flex min-h-[100vh] items-center justify-center overflow-hidden pt-20">
+        <div className="absolute inset-0">
+          <img
+            src={heroAsset.url}
+            alt="Luxury modern interior living room with Dubai skyline"
+            className="h-full w-full object-cover"
+            width={1920}
+            height={1088}
+            fetchPriority="high"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/50 to-charcoal/80" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-gold sm:text-sm">
+            Luxury Interior Design · Dubai
+          </p>
+          <h1 className="font-display text-4xl font-medium leading-tight text-cream sm:text-5xl md:text-6xl lg:text-7xl">
+            Spectra Interior Designing
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl font-display text-xl font-light italic text-cream/90 sm:text-2xl md:text-3xl">
+            Designing Spaces, Creating Memories
+          </p>
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-cream/80 sm:text-base">
+            Bespoke interior design for Dubai&apos;s most discerning homes and businesses. Where timeless elegance meets modern sophistication.
+          </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center rounded-md bg-gold px-8 py-3.5 text-sm font-semibold text-charcoal transition-all hover:bg-gold-light"
+            >
+              Book a Free Consultation
+            </a>
+            <a
+              href="#projects"
+              className="inline-flex items-center justify-center rounded-md border border-cream/30 bg-transparent px-8 py-3.5 text-sm font-medium text-cream transition-all hover:bg-cream/10"
+            >
+              View Our Work
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section id="services" className="py-20 sm:py-28 bg-background">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">What We Do</p>
+            <h2 className="mt-3 font-display text-3xl text-foreground sm:text-4xl md:text-5xl">
+              Our Services
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Comprehensive interior design solutions tailored to residential and commercial spaces across Dubai.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {services.map((service) => (
+              <div
+                key={service.title}
+                className="group rounded-xl border border-border bg-card p-8 transition-all hover:shadow-lg hover:border-gold/30"
+              >
+                <div className="inline-flex items-center justify-center rounded-lg bg-muted p-3 text-gold transition-colors group-hover:bg-gold group-hover:text-charcoal">
+                  <service.icon size={28} strokeWidth={1.5} />
+                </div>
+                <h3 className="mt-5 font-display text-xl text-card-foreground">
+                  {service.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {service.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Projects */}
+      <section id="projects" className="py-20 sm:py-28 bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Portfolio</p>
+            <h2 className="mt-3 font-display text-3xl text-foreground sm:text-4xl md:text-5xl">
+              Featured Projects
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              A curated selection of our finest residential, commercial, and conceptual interiors.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project) => (
+              <div
+                key={project.title}
+                className="group relative overflow-hidden rounded-xl bg-card"
+              >
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    width={944}
+                    height={704}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-gold">{project.category}</p>
+                  <h3 className="font-display text-xl text-cream">{project.title}</h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About */}
+      <section id="about" className="py-20 sm:py-28 bg-background">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            <div className="relative">
+              <div className="relative overflow-hidden rounded-xl">
+                <img
+                  src={project1Asset.url}
+                  alt="Spectra Interior Designing modern living room project"
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                  width={944}
+                  height={704}
+                />
+              </div>
+              <div className="absolute -bottom-6 -right-6 hidden rounded-xl bg-primary p-6 text-primary-foreground shadow-xl lg:block">
+                <p className="font-display text-4xl font-medium">12+</p>
+                <p className="text-sm opacity-90">Years of Experience</p>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">About Us</p>
+              <h2 className="mt-3 font-display text-3xl text-foreground sm:text-4xl md:text-5xl">
+                Crafting Luxury Interiors in Dubai
+              </h2>
+              <p className="mt-6 text-muted-foreground leading-relaxed">
+                Spectra Interior Designing is a Dubai-based studio dedicated to creating spaces that inspire. From intimate residences to landmark commercial interiors, we blend creativity, craftsmanship, and meticulous attention to detail.
+              </p>
+              <p className="mt-4 text-muted-foreground leading-relaxed">
+                Our design philosophy is simple: every space should tell a story. We listen carefully, plan thoughtfully, and deliver environments that are as functional as they are beautiful — always on time and within budget.
+              </p>
+              <div className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3">
+                <div>
+                  <p className="font-display text-3xl font-medium text-gold">150+</p>
+                  <p className="text-sm text-muted-foreground">Projects Completed</p>
+                </div>
+                <div>
+                  <p className="font-display text-3xl font-medium text-gold">12+</p>
+                  <p className="text-sm text-muted-foreground">Years Experience</p>
+                </div>
+                <div>
+                  <p className="font-display text-3xl font-medium text-gold">40+</p>
+                  <p className="text-sm text-muted-foreground">Design Awards</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section id="why-us" className="py-20 sm:py-28 bg-primary text-primary-foreground">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Why Spectra</p>
+            <h2 className="mt-3 font-display text-3xl text-cream sm:text-4xl md:text-5xl">
+              Why Choose Us
+            </h2>
+            <p className="mt-4 text-cream/70">
+              We combine design excellence with dependable service to deliver interiors that exceed expectations.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {whyUs.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-xl border border-cream/10 bg-cream/5 p-6 transition-all hover:border-gold/30 hover:bg-cream/10"
+              >
+                <div className="inline-flex items-center justify-center rounded-full bg-gold/20 p-3 text-gold">
+                  <item.icon size={26} strokeWidth={1.5} />
+                </div>
+                <h3 className="mt-5 font-display text-lg text-cream">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-cream/70">
+                  {item.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section id="testimonials" className="py-20 sm:py-28 bg-background">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Client Stories</p>
+            <h2 className="mt-3 font-display text-3xl text-foreground sm:text-4xl md:text-5xl">
+              Testimonials
+            </h2>
+          </div>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {testimonials.map((testimonial) => (
+              <div
+                key={testimonial.name}
+                className="relative rounded-xl border border-border bg-card p-8"
+              >
+                <Quote className="absolute top-6 right-6 text-gold/20" size={40} />
+                <p className="relative z-10 text-card-foreground leading-relaxed">
+                  &ldquo;{testimonial.text}&rdquo;
+                </p>
+                <div className="mt-6 flex items-center gap-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted font-display text-lg text-gold">
+                    {testimonial.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-display text-base text-card-foreground">{testimonial.name}</p>
+                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id="contact" className="py-20 sm:py-28 bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold">Get in Touch</p>
+            <h2 className="mt-3 font-display text-3xl text-foreground sm:text-4xl md:text-5xl">
+              Contact Us
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Ready to transform your space? Book your free consultation today.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-8 lg:grid-cols-2">
+            <div className="grid gap-6 sm:grid-cols-2">
+              {contactInfo.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-xl border border-border bg-card p-6 transition-all hover:border-gold/30"
+                >
+                  <div className="inline-flex items-center justify-center rounded-full bg-muted p-2.5 text-gold">
+                    <item.icon size={22} strokeWidth={1.5} />
+                  </div>
+                  <p className="mt-4 text-sm font-semibold text-muted-foreground">{item.label}</p>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      className="mt-1 block font-display text-lg text-card-foreground transition-colors hover:text-gold"
+                    >
+                      {item.value}
+                    </a>
+                  ) : (
+                    <p className="mt-1 font-display text-lg text-card-foreground">
+                      {item.value}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-xl border border-border bg-card p-8 shadow-sm">
+              <h3 className="font-display text-2xl text-card-foreground">Book a Free Consultation</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Fill in your details and our team will reach out within 24 hours.
+              </p>
+              <form className="mt-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-card-foreground">
+                      Name
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      placeholder="Your name"
+                      className="mt-1 w-full rounded-md border border-input bg-background px-4 py-2.5 text-sm text-foreground outline-none focus:border-gold focus:ring-1 focus:ring-gold"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-card-foreground">
+                      Phone
+                    </label>
+                    <input
+                      id="phone"
+                      type="tel"
+                      placeholder="Your phone number"
+                      className="mt-1 w-full rounded-md border border-input bg-background px-4 py-2.5 text-sm text-foreground outline-none focus:border-gold focus:ring-1 focus:ring-gold"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-card-foreground">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="Your email address"
+                    className="mt-1 w-full rounded-md border border-input bg-background px-4 py-2.5 text-sm text-foreground outline-none focus:border-gold focus:ring-1 focus:ring-gold"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-card-foreground">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    rows={4}
+                    placeholder="Tell us about your project"
+                    className="mt-1 w-full rounded-md border border-input bg-background px-4 py-2.5 text-sm text-foreground outline-none focus:border-gold focus:ring-1 focus:ring-gold"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full inline-flex items-center justify-center rounded-md bg-gold px-6 py-3 text-sm font-semibold text-charcoal transition-colors hover:bg-gold-light"
+                >
+                  Send Inquiry
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-background py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left">
+            <div>
+              <p className="font-display text-xl text-foreground">
+                Spectra Interior Designing
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Designing Spaces, Creating Memories
+              </p>
+            </div>
+            <div className="text-sm text-muted-foreground">
+              <p>
+                Spectra Interior Designing · Built at London International
+              </p>
+              <p>
+                <a href="https://lisrc.ae" className="transition-colors hover:text-gold">lisrc.ae</a>
+                {" · by Rashneema Ameen"}
+              </p>
+            </div>
+          </div>
+          <div className="mt-8 border-t border-border pt-6 text-center text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Spectra Interior Designing. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
