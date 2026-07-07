@@ -142,7 +142,8 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Address",
-    value: "Office No. 4, Twin Tower, International City, Dubai, UAE",
+    value: "Warehouse 01, Warsan 1 St – behind Dubai Textile City – Warsan First – Dubai International City – Dubai",
+    href: "https://maps.google.com/?q=Warehouse+01+Warsan+1+St+behind+Dubai+Textile+City+Warsan+First+Dubai+International+City+Dubai",
   },
   {
     icon: Phone,
@@ -610,6 +611,37 @@ function Index() {
               </form>
             </div>
           </div>
+
+          {/* Map */}
+          <Reveal className="mt-12">
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:border-gold/30 hover:shadow-xl">
+              <div className="relative aspect-[16/9] w-full sm:aspect-[21/9]">
+                <iframe
+                  title="Spectra Interior Designing location on Google Maps"
+                  src="https://maps.google.com/maps?q=Warehouse%2001%20Warsan%201%20St%20behind%20Dubai%20Textile%20City%20Warsan%20First%20Dubai%20International%20City%20Dubai&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  className="absolute inset-0 h-full w-full border-0"
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+              <div className="flex flex-col items-start justify-between gap-4 border-t border-border px-6 py-5 sm:flex-row sm:items-center">
+                <div>
+                  <p className="font-display text-lg text-card-foreground">Visit Our Studio</p>
+                  <p className="text-sm text-muted-foreground">Warehouse 01, Warsan 1 St, Dubai International City</p>
+                </div>
+                <a
+                  href="https://maps.google.com/?q=Warehouse+01+Warsan+1+St+behind+Dubai+Textile+City+Warsan+First+Dubai+International+City+Dubai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-charcoal transition-colors hover:bg-gold-light"
+                >
+                  <MapPin size={16} />
+                  Get Directions
+                </a>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
