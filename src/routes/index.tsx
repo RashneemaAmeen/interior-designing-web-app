@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Home,
   Building2,
@@ -18,6 +18,7 @@ import {
   MapPin,
   Clock3,
   Quote,
+  House,
 } from "lucide-react";
 
 import heroAsset from "@/assets/hero.jpg.asset.json";
@@ -164,18 +165,53 @@ const contactInfo = [
 
 function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <div id="home" className="min-h-screen bg-background">
       {/* Header */}
-      <header className="fixed inset-x-0 top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
-          <a href="#home" className="flex items-center gap-2">
-            <span className="font-display text-xl sm:text-2xl font-semibold tracking-tight text-foreground">
-              Spectra
+      <header
+        className={`fixed inset-x-0 top-0 z-50 backdrop-blur-md transition-all duration-300 ${
+          scrolled
+            ? "bg-background/95 shadow-md border-b border-border/60"
+            : "bg-background/70 border-b border-transparent"
+        }`}
+      >
+        <div
+          className={`mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 transition-all duration-300 ${
+            scrolled ? "py-2.5" : "py-4"
+          }`}
+        >
+          <a href="#home" className="flex items-center gap-2.5 group">
+            <span
+              className={`inline-flex items-center justify-center rounded-md bg-gold/10 text-gold transition-all duration-300 group-hover:bg-gold group-hover:text-charcoal ${
+                scrolled ? "h-8 w-8" : "h-10 w-10"
+              }`}
+            >
+              <House size={scrolled ? 16 : 20} strokeWidth={1.75} />
             </span>
-            <span className="hidden sm:inline font-display text-xl sm:text-2xl font-light tracking-tight text-gold">
-              Interior
+            <span className="flex items-baseline gap-1.5">
+              <span
+                className={`font-display font-semibold tracking-tight text-foreground transition-all duration-300 ${
+                  scrolled ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"
+                }`}
+              >
+                Spectra
+              </span>
+              <span
+                className={`hidden sm:inline font-display font-light tracking-tight text-gold transition-all duration-300 ${
+                  scrolled ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"
+                }`}
+              >
+                Interior
+              </span>
             </span>
           </a>
 
@@ -193,7 +229,9 @@ function Index() {
 
           <a
             href="#contact"
-            className="hidden lg:inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className={`hidden lg:inline-flex items-center justify-center rounded-md bg-primary font-medium text-primary-foreground transition-all duration-300 hover:bg-primary/90 ${
+              scrolled ? "px-4 py-2 text-sm" : "px-5 py-2.5 text-sm"
+            }`}
           >
             Book Consultation
           </a>
@@ -232,6 +270,7 @@ function Index() {
           </div>
         )}
       </header>
+
 
       {/* Hero */}
       <section className="relative flex min-h-[100vh] items-center justify-center overflow-hidden pt-20">
