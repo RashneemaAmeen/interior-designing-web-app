@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Home,
   Building2,
@@ -18,6 +18,7 @@ import {
   MapPin,
   Clock3,
   Quote,
+  House,
 } from "lucide-react";
 
 import heroAsset from "@/assets/hero.jpg.asset.json";
