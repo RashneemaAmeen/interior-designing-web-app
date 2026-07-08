@@ -501,6 +501,8 @@ function Index() {
         </div>
       </section>
 
+      <AIRoomDesigner />
+
       {/* Testimonials */}
       <section id="testimonials" className="py-20 sm:py-28 bg-background">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
