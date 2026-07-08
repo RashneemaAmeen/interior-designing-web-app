@@ -21,6 +21,7 @@ import {
   House,
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
+import { AIRoomDesigner } from "@/components/AIRoomDesigner";
 
 import heroAsset from "@/assets/hero.jpg.asset.json";
 import project1Asset from "@/assets/project-1.jpg.asset.json";
@@ -52,6 +53,7 @@ const navLinks = [
   { label: "Services", href: "#services" },
   { label: "Portfolio", href: "#portfolio" },
   { label: "About", href: "#about" },
+  { label: "AI Designer", href: "#ai-designer" },
   { label: "Testimonials", href: "#testimonials" },
   { label: "Contact", href: "#contact" },
 ];
@@ -498,6 +500,8 @@ function Index() {
           </div>
         </div>
       </section>
+
+      <AIRoomDesigner />
 
       {/* Testimonials */}
       <section id="testimonials" className="py-20 sm:py-28 bg-background">
