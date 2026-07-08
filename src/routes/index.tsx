@@ -707,7 +707,7 @@ function Index() {
       {/* Footer */}
       <footer className="border-t border-border bg-background py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center justify-between gap-6 text-center sm:flex-row sm:text-left">
+          <div className="flex flex-col items-center justify-between gap-8 text-center sm:flex-row sm:text-left">
             <div>
               <p className="font-display text-xl text-foreground">
                 Spectra Interior Designing
@@ -716,6 +716,50 @@ function Index() {
                 Designing Spaces, Creating Memories
               </p>
             </div>
+
+            <div className="flex items-center gap-4">
+              <a
+                href="https://www.instagram.com/spectra_technical_services/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Follow Spectra on Instagram"
+                className="inline-flex items-center justify-center rounded-full border border-border bg-background p-3 text-foreground transition-all duration-300 hover:border-gold/40 hover:text-gold hover:shadow-md"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5"
+                  aria-hidden="true"
+                >
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                </svg>
+              </a>
+              <a
+                href="https://www.facebook.com/Spectratechnicalservices"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Follow Spectra on Facebook"
+                className="inline-flex items-center justify-center rounded-full border border-border bg-background p-3 text-foreground transition-all duration-300 hover:border-gold/40 hover:text-gold hover:shadow-md"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="h-5 w-5"
+                  aria-hidden="true"
+                >
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+              </a>
+            </div>
+
             <div className="text-sm text-muted-foreground">
               <p>
                 Spectra Interior Designing · Built at London International
