@@ -21,7 +21,10 @@ import {
   User,
   Upload,
   Sparkles,
+  Loader2,
+  Copy,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const PROJECT_TYPES = [
   { label: "Residential Interior", icon: Home },
