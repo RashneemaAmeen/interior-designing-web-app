@@ -222,6 +222,8 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
     try {
       const ref = generateReference();
       const dt = new Date(`${date}T${to24h(time)}:00`).toISOString();
+      const { data: userData } = await supabase.auth.getUser();
+      const uid = userData.user?.id ?? null;
       const { error: insertError } = await supabase
         .from("consultations")
         .insert({
@@ -237,6 +239,7 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
           project_description: description.trim() || null,
           inspiration_images: images.map((i) => ({ name: i.name })),
           status: "pending",
+          user_id: uid,
         });
       if (insertError) throw insertError;
       setReference(ref);

@@ -19,10 +19,14 @@ import {
   Clock3,
   Quote,
   House,
+  LogIn,
+  UserCircle2,
 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/Reveal";
 import { AIRoomDesigner } from "@/components/AIRoomDesigner";
 import { BookingModal } from "@/components/BookingModal";
+import { useAuth } from "@/hooks/useAuth";
 
 import heroAsset from "@/assets/hero.jpg.asset.json";
 import project1Asset from "@/assets/project-1.jpg.asset.json";
@@ -176,6 +180,7 @@ function Index() {
   const [mapAllowed, setMapAllowed] = useState(false);
   const [copied, setCopied] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const { user } = useAuth();
   const openBooking = () => {
     setBookingOpen(true);
     setMobileMenuOpen(false);
@@ -259,15 +264,32 @@ function Index() {
             ))}
           </nav>
 
-          <button
-            type="button"
-            onClick={openBooking}
-            className={`hidden lg:inline-flex items-center justify-center rounded-md bg-primary font-medium text-primary-foreground transition-all duration-300 hover:bg-primary/90 ${
-              scrolled ? "px-4 py-2 text-sm" : "px-5 py-2.5 text-sm"
-            }`}
-          >
-            Book Consultation
-          </button>
+          <div className="hidden lg:flex items-center gap-3">
+            {user ? (
+              <Link
+                to="/projects"
+                className="inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-2 text-sm font-medium text-foreground hover:bg-muted"
+              >
+                <UserCircle2 size={16} /> My Projects
+              </Link>
+            ) : (
+              <Link
+                to="/auth"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/80 hover:text-gold"
+              >
+                <LogIn size={16} /> Sign in
+              </Link>
+            )}
+            <button
+              type="button"
+              onClick={openBooking}
+              className={`inline-flex items-center justify-center rounded-md bg-primary font-medium text-primary-foreground transition-all duration-300 hover:bg-primary/90 ${
+                scrolled ? "px-4 py-2 text-sm" : "px-5 py-2.5 text-sm"
+              }`}
+            >
+              Book Consultation
+            </button>
+          </div>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -292,6 +314,13 @@ function Index() {
                   {link.label}
                 </a>
               ))}
+              <Link
+                to={user ? "/projects" : "/auth"}
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-3 text-base font-medium text-foreground/80 transition-colors hover:text-gold border-b border-border"
+              >
+                {user ? "My Projects" : "Sign in"}
+              </Link>
               <button
                 type="button"
                 onClick={openBooking}
