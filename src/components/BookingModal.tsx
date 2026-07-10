@@ -103,6 +103,8 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
   const [images, setImages] = useState<InspirationImage[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [confirmed, setConfirmed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [reference, setReference] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
