@@ -18,10 +18,11 @@ import {
   Armchair,
   KeyRound,
   Calendar,
-  User,
   Upload,
-  Sparkles,
+  Loader2,
+  Copy,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const PROJECT_TYPES = [
   { label: "Residential Interior", icon: Home },
@@ -73,6 +74,28 @@ function todayISO(): string {
   return new Date(d.getTime() - tz).toISOString().slice(0, 10);
 }
 
+function to24h(slot: string): string {
+  // "9:30 AM" -> "09:30"
+  const m = slot.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!m) return "09:00";
+  let h = parseInt(m[1], 10);
+  const min = m[2];
+  const ampm = m[3].toUpperCase();
+  if (ampm === "PM" && h !== 12) h += 12;
+  if (ampm === "AM" && h === 12) h = 0;
+  return `${String(h).padStart(2, "0")}:${min}`;
+}
+
+function generateReference(): string {
+  const d = new Date();
+  const ymd =
+    String(d.getFullYear()) +
+    String(d.getMonth() + 1).padStart(2, "0") +
+    String(d.getDate()).padStart(2, "0");
+  const rand = Math.random().toString(36).slice(2, 8).toUpperCase();
+  return `SPC-${ymd}-${rand}`;
+}
+
 type Details = {
   name: string;
   phone: string;
@@ -100,6 +123,8 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
   const [images, setImages] = useState<InspirationImage[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [confirmed, setConfirmed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [reference, setReference] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -127,6 +152,8 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
     setImages([]);
     setError(null);
     setConfirmed(false);
+    setSubmitting(false);
+    setReference("");
   }
 
   function handleClose() {
@@ -187,9 +214,43 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
     setStep((s) => Math.max(1, s - 1));
   }
 
-  function submit(e: FormEvent) {
+  async function submit(e: FormEvent) {
     e.preventDefault();
-    setConfirmed(true);
+    if (submitting) return;
+    setError(null);
+    setSubmitting(true);
+    try {
+      const ref = generateReference();
+      const dt = new Date(`${date}T${to24h(time)}:00`).toISOString();
+      const { error: insertError } = await supabase
+        .from("consultations")
+        .insert({
+          reference_number: ref,
+          project_type: projectType,
+          service_type: service,
+          consultation_datetime: dt,
+          client_name: details.name.trim(),
+          client_phone: details.phone.trim(),
+          client_email: details.email.trim(),
+          property_location: details.location.trim(),
+          project_budget: details.budget,
+          project_description: description.trim() || null,
+          inspiration_images: images.map((i) => ({ name: i.name })),
+          status: "pending",
+        });
+      if (insertError) throw insertError;
+      setReference(ref);
+      setConfirmed(true);
+    } catch (err) {
+      console.error("[booking] insert failed:", err);
+      setError(
+        err instanceof Error
+          ? `Could not save your booking: ${err.message}`
+          : "Could not save your booking. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (!open) return null;
@@ -267,11 +328,14 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
         <div className="flex-1 overflow-y-auto px-5 sm:px-8 py-6">
           {confirmed ? (
             <ConfirmedView
+              reference={reference}
               projectType={projectType}
               service={service}
               date={date}
               time={time}
               details={details}
+              description={description}
+              images={images}
               onClose={handleClose}
             />
           ) : (
@@ -362,10 +426,20 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
               <button
                 type="button"
                 onClick={submit}
-                className="inline-flex items-center gap-2 rounded-md bg-gold px-5 py-2.5 text-sm font-semibold text-charcoal shadow-lg shadow-gold/20 transition-all hover:bg-gold-light"
+                disabled={submitting}
+                className="inline-flex items-center gap-2 rounded-md bg-gold px-5 py-2.5 text-sm font-semibold text-charcoal shadow-lg shadow-gold/20 transition-all hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-70"
               >
-                <Check size={16} />
-                Confirm Consultation
+                {submitting ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Saving…
+                  </>
+                ) : (
+                  <>
+                    <Check size={16} />
+                    Confirm Consultation
+                  </>
+                )}
               </button>
             )}
           </div>
@@ -777,49 +851,139 @@ function SummaryRow({
 }
 
 function ConfirmedView({
+  reference,
   projectType,
   service,
   date,
   time,
   details,
+  description,
+  images,
   onClose,
 }: {
+  reference: string;
   projectType: string;
   service: string;
   date: string;
   time: string;
   details: Details;
+  description: string;
+  images: InspirationImage[];
   onClose: () => void;
 }) {
+  const [copied, setCopied] = useState(false);
   const prettyDate = date
     ? new Date(date + "T00:00:00").toLocaleDateString(undefined, {
         weekday: "long",
+        year: "numeric",
         month: "long",
         day: "numeric",
       })
     : "—";
+  const copyRef = async () => {
+    try {
+      await navigator.clipboard.writeText(reference);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* ignore */
+    }
+  };
   return (
-    <div className="py-6 text-center">
-      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/15">
-        <Sparkles className="h-7 w-7 text-gold" />
+    <div className="py-2">
+      <div className="text-center">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/15">
+          <Check className="h-7 w-7 text-gold" />
+        </div>
+        <h3 className="mt-4 font-display text-2xl text-foreground">
+          Thank you, {details.name.split(" ")[0] || "friend"}!
+        </h3>
+        <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
+          Your consultation has been booked. Our team will contact you shortly to confirm.
+        </p>
       </div>
-      <h3 className="mt-4 font-display text-2xl text-foreground">Thank you, {details.name.split(" ")[0] || "friend"}!</h3>
-      <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
-        Your consultation request has been received. Our team will reach out at{" "}
-        <span className="text-foreground">{details.phone}</span> to confirm your{" "}
-        <span className="text-foreground">{projectType}</span> ·{" "}
-        <span className="text-foreground">{service}</span> session on{" "}
-        <span className="text-foreground">{prettyDate}</span> at{" "}
-        <span className="text-foreground">{time}</span>.
-      </p>
-      <div className="mt-6 flex flex-wrap justify-center gap-3">
+
+      {/* Reference number */}
+      <div className="mt-6 rounded-xl border border-gold/40 bg-gold/5 p-5 text-center">
+        <div className="text-[10px] uppercase tracking-[0.25em] text-gold">Consultation reference</div>
+        <div className="mt-2 flex items-center justify-center gap-2 font-mono text-xl sm:text-2xl font-semibold text-foreground">
+          {reference}
+          <button
+            type="button"
+            onClick={copyRef}
+            aria-label="Copy reference"
+            className="rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+          >
+            <Copy size={16} />
+          </button>
+        </div>
+        <p className="mt-2 text-xs text-muted-foreground">
+          {copied ? "Copied to clipboard!" : "Keep this number for your records."}
+        </p>
+      </div>
+
+      {/* Full details */}
+      <div className="mt-6 grid gap-3 text-sm">
+        <DetailRow label="Project type" value={projectType} />
+        <DetailRow label="Service" value={service} />
+        <DetailRow label="Date & time" value={`${prettyDate} · ${time}`} />
+        <DetailRow label="Name" value={details.name} />
+        <DetailRow label="Phone" value={details.phone} />
+        <DetailRow label="Email" value={details.email} />
+        <DetailRow label="Property location" value={details.location} />
+        <DetailRow label="Approximate budget" value={details.budget} />
+        {description && (
+          <DetailRow label="Project description" value={description} multiline />
+        )}
+        {images.length > 0 && (
+          <div className="rounded-lg border border-border bg-muted/30 p-4">
+            <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              Inspiration images ({images.length})
+            </div>
+            <div className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-6">
+              {images.map((img, i) => (
+                <div key={i} className="aspect-square overflow-hidden rounded-md border border-border">
+                  <img src={img.dataUrl} alt="" className="h-full w-full object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="mt-8 flex flex-wrap justify-center gap-3">
         <button
           type="button"
           onClick={onClose}
           className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
         >
-          <User size={16} /> Done
+          Done
         </button>
+      </div>
+    </div>
+  );
+}
+
+function DetailRow({
+  label,
+  value,
+  multiline = false,
+}: {
+  label: string;
+  value: string;
+  multiline?: boolean;
+}) {
+  return (
+    <div className="flex items-start justify-between gap-4 rounded-lg border border-border bg-muted/30 p-3">
+      <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground pt-0.5">
+        {label}
+      </div>
+      <div
+        className={`min-w-0 flex-1 text-right text-sm font-medium text-foreground ${
+          multiline ? "whitespace-pre-wrap text-left" : "truncate"
+        }`}
+      >
+        {value}
       </div>
     </div>
   );
