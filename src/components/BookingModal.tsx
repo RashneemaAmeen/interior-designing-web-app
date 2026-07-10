@@ -132,6 +132,8 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
     setImages([]);
     setError(null);
     setConfirmed(false);
+    setSubmitting(false);
+    setReference("");
   }
 
   function handleClose() {
