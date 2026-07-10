@@ -333,12 +333,13 @@ function Index() {
             Bespoke interior design for Dubai&apos;s most discerning homes and businesses. Where timeless elegance meets modern sophistication.
           </p>
           <div className="mt-8 flex w-full flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
-            <a
-              href="#contact"
+            <button
+              type="button"
+              onClick={openBooking}
               className="inline-flex w-full items-center justify-center rounded-md bg-gold px-8 py-3.5 text-base font-semibold text-charcoal shadow-lg shadow-gold/20 transition-all duration-300 hover:bg-gold-light hover:shadow-xl sm:w-auto sm:text-sm"
             >
               Book a Free Consultation
-            </a>
+            </button>
             <a
               href="#portfolio"
               className="inline-flex w-full items-center justify-center rounded-md border border-cream/40 bg-transparent px-8 py-3.5 text-base font-medium text-cream transition-all duration-300 hover:bg-cream/10 sm:w-auto sm:text-sm"
