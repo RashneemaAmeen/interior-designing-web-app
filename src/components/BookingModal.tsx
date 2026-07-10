@@ -330,11 +330,14 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
         <div className="flex-1 overflow-y-auto px-5 sm:px-8 py-6">
           {confirmed ? (
             <ConfirmedView
+              reference={reference}
               projectType={projectType}
               service={service}
               date={date}
               time={time}
               details={details}
+              description={description}
+              images={images}
               onClose={handleClose}
             />
           ) : (
