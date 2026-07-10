@@ -14,8 +14,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      consultation_messages: {
+        Row: {
+          body: string
+          consultation_id: string
+          created_at: string
+          id: string
+          sender_id: string | null
+          sender_role: string
+        }
+        Insert: {
+          body: string
+          consultation_id: string
+          created_at?: string
+          id?: string
+          sender_id?: string | null
+          sender_role: string
+        }
+        Update: {
+          body?: string
+          consultation_id?: string
+          created_at?: string
+          id?: string
+          sender_id?: string | null
+          sender_role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consultation_messages_consultation_id_fkey"
+            columns: ["consultation_id"]
+            isOneToOne: false
+            referencedRelation: "consultations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       consultations: {
         Row: {
+          assigned_designer: string | null
           client_email: string
           client_name: string
           client_phone: string
@@ -30,8 +66,10 @@ export type Database = {
           reference_number: string
           service_type: string
           status: string
+          user_id: string | null
         }
         Insert: {
+          assigned_designer?: string | null
           client_email: string
           client_name: string
           client_phone: string
@@ -46,8 +84,10 @@ export type Database = {
           reference_number?: string
           service_type: string
           status?: string
+          user_id?: string | null
         }
         Update: {
+          assigned_designer?: string | null
           client_email?: string
           client_name?: string
           client_phone?: string
@@ -62,6 +102,7 @@ export type Database = {
           reference_number?: string
           service_type?: string
           status?: string
+          user_id?: string | null
         }
         Relationships: []
       }
