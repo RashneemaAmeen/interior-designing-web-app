@@ -194,9 +194,43 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
     setStep((s) => Math.max(1, s - 1));
   }
 
-  function submit(e: FormEvent) {
+  async function submit(e: FormEvent) {
     e.preventDefault();
-    setConfirmed(true);
+    if (submitting) return;
+    setError(null);
+    setSubmitting(true);
+    try {
+      const ref = generateReference();
+      const dt = new Date(`${date}T${to24h(time)}:00`).toISOString();
+      const { error: insertError } = await supabase
+        .from("consultations")
+        .insert({
+          reference_number: ref,
+          project_type: projectType,
+          service_type: service,
+          consultation_datetime: dt,
+          client_name: details.name.trim(),
+          client_phone: details.phone.trim(),
+          client_email: details.email.trim(),
+          property_location: details.location.trim(),
+          project_budget: details.budget,
+          project_description: description.trim() || null,
+          inspiration_images: images.map((i) => ({ name: i.name })),
+          status: "pending",
+        });
+      if (insertError) throw insertError;
+      setReference(ref);
+      setConfirmed(true);
+    } catch (err) {
+      console.error("[booking] insert failed:", err);
+      setError(
+        err instanceof Error
+          ? `Could not save your booking: ${err.message}`
+          : "Could not save your booking. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (!open) return null;
