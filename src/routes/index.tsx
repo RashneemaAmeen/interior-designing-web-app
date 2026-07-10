@@ -175,6 +175,11 @@ function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [mapAllowed, setMapAllowed] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const openBooking = () => {
+    setBookingOpen(true);
+    setMobileMenuOpen(false);
+  };
 
   const copyAddress = async () => {
     try {
