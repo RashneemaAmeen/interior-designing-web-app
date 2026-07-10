@@ -14,7 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      consultations: {
+        Row: {
+          client_email: string
+          client_name: string
+          client_phone: string
+          consultation_datetime: string
+          created_at: string
+          id: string
+          inspiration_images: Json
+          project_budget: string
+          project_description: string | null
+          project_type: string
+          property_location: string
+          reference_number: string
+          service_type: string
+          status: string
+        }
+        Insert: {
+          client_email: string
+          client_name: string
+          client_phone: string
+          consultation_datetime: string
+          created_at?: string
+          id?: string
+          inspiration_images?: Json
+          project_budget: string
+          project_description?: string | null
+          project_type: string
+          property_location: string
+          reference_number?: string
+          service_type: string
+          status?: string
+        }
+        Update: {
+          client_email?: string
+          client_name?: string
+          client_phone?: string
+          consultation_datetime?: string
+          created_at?: string
+          id?: string
+          inspiration_images?: Json
+          project_budget?: string
+          project_description?: string | null
+          project_type?: string
+          property_location?: string
+          reference_number?: string
+          service_type?: string
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
