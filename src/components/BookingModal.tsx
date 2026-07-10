@@ -428,10 +428,20 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
               <button
                 type="button"
                 onClick={submit}
-                className="inline-flex items-center gap-2 rounded-md bg-gold px-5 py-2.5 text-sm font-semibold text-charcoal shadow-lg shadow-gold/20 transition-all hover:bg-gold-light"
+                disabled={submitting}
+                className="inline-flex items-center gap-2 rounded-md bg-gold px-5 py-2.5 text-sm font-semibold text-charcoal shadow-lg shadow-gold/20 transition-all hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-70"
               >
-                <Check size={16} />
-                Confirm Consultation
+                {submitting ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Saving…
+                  </>
+                ) : (
+                  <>
+                    <Check size={16} />
+                    Confirm Consultation
+                  </>
+                )}
               </button>
             )}
           </div>
