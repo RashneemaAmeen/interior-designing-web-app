@@ -292,13 +292,13 @@ function Index() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
+              <button
+                type="button"
+                onClick={openBooking}
                 className="mt-4 inline-flex items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 Book Consultation
-              </a>
+              </button>
             </nav>
           </div>
         )}
