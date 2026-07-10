@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { AIRoomDesigner } from "@/components/AIRoomDesigner";
+import { BookingModal } from "@/components/BookingModal";
 
 import heroAsset from "@/assets/hero.jpg.asset.json";
 import project1Asset from "@/assets/project-1.jpg.asset.json";
@@ -174,6 +175,11 @@ function Index() {
   const [scrolled, setScrolled] = useState(false);
   const [mapAllowed, setMapAllowed] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const openBooking = () => {
+    setBookingOpen(true);
+    setMobileMenuOpen(false);
+  };
 
   const copyAddress = async () => {
     try {
@@ -253,14 +259,15 @@ function Index() {
             ))}
           </nav>
 
-          <a
-            href="#contact"
+          <button
+            type="button"
+            onClick={openBooking}
             className={`hidden lg:inline-flex items-center justify-center rounded-md bg-primary font-medium text-primary-foreground transition-all duration-300 hover:bg-primary/90 ${
               scrolled ? "px-4 py-2 text-sm" : "px-5 py-2.5 text-sm"
             }`}
           >
             Book Consultation
-          </a>
+          </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -285,13 +292,13 @@ function Index() {
                   {link.label}
                 </a>
               ))}
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
+              <button
+                type="button"
+                onClick={openBooking}
                 className="mt-4 inline-flex items-center justify-center rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 Book Consultation
-              </a>
+              </button>
             </nav>
           </div>
         )}
@@ -326,12 +333,13 @@ function Index() {
             Bespoke interior design for Dubai&apos;s most discerning homes and businesses. Where timeless elegance meets modern sophistication.
           </p>
           <div className="mt-8 flex w-full flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
-            <a
-              href="#contact"
+            <button
+              type="button"
+              onClick={openBooking}
               className="inline-flex w-full items-center justify-center rounded-md bg-gold px-8 py-3.5 text-base font-semibold text-charcoal shadow-lg shadow-gold/20 transition-all duration-300 hover:bg-gold-light hover:shadow-xl sm:w-auto sm:text-sm"
             >
               Book a Free Consultation
-            </a>
+            </button>
             <a
               href="#portfolio"
               className="inline-flex w-full items-center justify-center rounded-md border border-cream/40 bg-transparent px-8 py-3.5 text-base font-medium text-cream transition-all duration-300 hover:bg-cream/10 sm:w-auto sm:text-sm"
@@ -779,6 +787,7 @@ function Index() {
           </div>
         </div>
       </footer>
+      <BookingModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
     </div>
   );
 }
