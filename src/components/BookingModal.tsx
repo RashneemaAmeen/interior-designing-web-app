@@ -843,49 +843,139 @@ function SummaryRow({
 }
 
 function ConfirmedView({
+  reference,
   projectType,
   service,
   date,
   time,
   details,
+  description,
+  images,
   onClose,
 }: {
+  reference: string;
   projectType: string;
   service: string;
   date: string;
   time: string;
   details: Details;
+  description: string;
+  images: InspirationImage[];
   onClose: () => void;
 }) {
+  const [copied, setCopied] = useState(false);
   const prettyDate = date
     ? new Date(date + "T00:00:00").toLocaleDateString(undefined, {
         weekday: "long",
+        year: "numeric",
         month: "long",
         day: "numeric",
       })
     : "—";
+  const copyRef = async () => {
+    try {
+      await navigator.clipboard.writeText(reference);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* ignore */
+    }
+  };
   return (
-    <div className="py-6 text-center">
-      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/15">
-        <Sparkles className="h-7 w-7 text-gold" />
+    <div className="py-2">
+      <div className="text-center">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gold/15">
+          <Check className="h-7 w-7 text-gold" />
+        </div>
+        <h3 className="mt-4 font-display text-2xl text-foreground">
+          Thank you, {details.name.split(" ")[0] || "friend"}!
+        </h3>
+        <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
+          Your consultation has been booked. Our team will contact you shortly to confirm.
+        </p>
       </div>
-      <h3 className="mt-4 font-display text-2xl text-foreground">Thank you, {details.name.split(" ")[0] || "friend"}!</h3>
-      <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
-        Your consultation request has been received. Our team will reach out at{" "}
-        <span className="text-foreground">{details.phone}</span> to confirm your{" "}
-        <span className="text-foreground">{projectType}</span> ·{" "}
-        <span className="text-foreground">{service}</span> session on{" "}
-        <span className="text-foreground">{prettyDate}</span> at{" "}
-        <span className="text-foreground">{time}</span>.
-      </p>
-      <div className="mt-6 flex flex-wrap justify-center gap-3">
+
+      {/* Reference number */}
+      <div className="mt-6 rounded-xl border border-gold/40 bg-gold/5 p-5 text-center">
+        <div className="text-[10px] uppercase tracking-[0.25em] text-gold">Consultation reference</div>
+        <div className="mt-2 flex items-center justify-center gap-2 font-mono text-xl sm:text-2xl font-semibold text-foreground">
+          {reference}
+          <button
+            type="button"
+            onClick={copyRef}
+            aria-label="Copy reference"
+            className="rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+          >
+            <Copy size={16} />
+          </button>
+        </div>
+        <p className="mt-2 text-xs text-muted-foreground">
+          {copied ? "Copied to clipboard!" : "Keep this number for your records."}
+        </p>
+      </div>
+
+      {/* Full details */}
+      <div className="mt-6 grid gap-3 text-sm">
+        <DetailRow label="Project type" value={projectType} />
+        <DetailRow label="Service" value={service} />
+        <DetailRow label="Date & time" value={`${prettyDate} · ${time}`} />
+        <DetailRow label="Name" value={details.name} />
+        <DetailRow label="Phone" value={details.phone} />
+        <DetailRow label="Email" value={details.email} />
+        <DetailRow label="Property location" value={details.location} />
+        <DetailRow label="Approximate budget" value={details.budget} />
+        {description && (
+          <DetailRow label="Project description" value={description} multiline />
+        )}
+        {images.length > 0 && (
+          <div className="rounded-lg border border-border bg-muted/30 p-4">
+            <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              Inspiration images ({images.length})
+            </div>
+            <div className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-6">
+              {images.map((img, i) => (
+                <div key={i} className="aspect-square overflow-hidden rounded-md border border-border">
+                  <img src={img.dataUrl} alt="" className="h-full w-full object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="mt-8 flex flex-wrap justify-center gap-3">
         <button
           type="button"
           onClick={onClose}
           className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
         >
-          <User size={16} /> Done
+          Done
         </button>
+      </div>
+    </div>
+  );
+}
+
+function DetailRow({
+  label,
+  value,
+  multiline = false,
+}: {
+  label: string;
+  value: string;
+  multiline?: boolean;
+}) {
+  return (
+    <div className="flex items-start justify-between gap-4 rounded-lg border border-border bg-muted/30 p-3">
+      <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground pt-0.5">
+        {label}
+      </div>
+      <div
+        className={`min-w-0 flex-1 text-right text-sm font-medium text-foreground ${
+          multiline ? "whitespace-pre-wrap text-left" : "truncate"
+        }`}
+      >
+        {value}
       </div>
     </div>
   );
