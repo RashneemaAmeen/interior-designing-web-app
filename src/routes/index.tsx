@@ -787,6 +787,7 @@ function Index() {
           </div>
         </div>
       </footer>
+      <BookingModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
     </div>
   );
 }
