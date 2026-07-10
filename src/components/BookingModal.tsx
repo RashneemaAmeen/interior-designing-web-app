@@ -18,9 +18,7 @@ import {
   Armchair,
   KeyRound,
   Calendar,
-  User,
   Upload,
-  Sparkles,
   Loader2,
   Copy,
 } from "lucide-react";
