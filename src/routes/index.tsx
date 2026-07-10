@@ -180,6 +180,7 @@ function Index() {
   const [mapAllowed, setMapAllowed] = useState(false);
   const [copied, setCopied] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const { user } = useAuth();
   const openBooking = () => {
     setBookingOpen(true);
     setMobileMenuOpen(false);
