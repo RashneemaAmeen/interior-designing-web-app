@@ -19,10 +19,14 @@ import {
   Clock3,
   Quote,
   House,
+  LogIn,
+  UserCircle2,
 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/Reveal";
 import { AIRoomDesigner } from "@/components/AIRoomDesigner";
 import { BookingModal } from "@/components/BookingModal";
+import { useAuth } from "@/hooks/useAuth";
 
 import heroAsset from "@/assets/hero.jpg.asset.json";
 import project1Asset from "@/assets/project-1.jpg.asset.json";
