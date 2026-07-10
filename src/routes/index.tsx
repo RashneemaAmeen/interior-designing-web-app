@@ -314,6 +314,13 @@ function Index() {
                   {link.label}
                 </a>
               ))}
+              <Link
+                to={user ? "/projects" : "/auth"}
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-3 text-base font-medium text-foreground/80 transition-colors hover:text-gold border-b border-border"
+              >
+                {user ? "My Projects" : "Sign in"}
+              </Link>
               <button
                 type="button"
                 onClick={openBooking}
