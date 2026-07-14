@@ -55,6 +55,7 @@ export type Database = {
           client_email: string
           client_name: string
           client_phone: string
+          confirmation_email_sent_at: string | null
           consultation_datetime: string
           created_at: string
           deposit_amount: number
@@ -77,6 +78,7 @@ export type Database = {
           client_email: string
           client_name: string
           client_phone: string
+          confirmation_email_sent_at?: string | null
           consultation_datetime: string
           created_at?: string
           deposit_amount?: number
@@ -99,6 +101,7 @@ export type Database = {
           client_email?: string
           client_name?: string
           client_phone?: string
+          confirmation_email_sent_at?: string | null
           consultation_datetime?: string
           created_at?: string
           deposit_amount?: number
