@@ -415,7 +415,7 @@ function Index() {
           <p className="mx-auto mt-6 max-w-2xl font-display text-xl font-light italic text-cream/90 sm:text-2xl md:text-3xl">
             Designing Spaces, Creating Memories
           </p>
-          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-cream/80 sm:text-base">
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-cream/90 sm:text-base">
             Bespoke interior design for Dubai&apos;s most discerning homes and businesses. Where timeless elegance meets modern sophistication.
           </p>
           <div className="mt-8 flex w-full flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
@@ -572,7 +572,7 @@ function Index() {
             <h2 className="mt-3 font-display text-3xl text-cream sm:text-4xl md:text-5xl">
               Why Choose Us
             </h2>
-            <p className="mt-4 text-cream/70">
+            <p className="mt-4 text-cream/85">
               We combine design excellence with dependable service to deliver interiors that exceed expectations.
             </p>
           </div>
@@ -585,7 +585,7 @@ function Index() {
                     <item.icon size={26} strokeWidth={1.5} />
                   </div>
                   <h3 className="mt-5 font-display text-lg text-cream">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-cream/70">
+                  <p className="mt-2 text-sm leading-relaxed text-cream/85">
                     {item.description}
                   </p>
                 </div>
