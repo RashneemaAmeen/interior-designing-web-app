@@ -874,7 +874,7 @@ function Index() {
         </div>
       </footer>
       <a
-        href="https://wa.me/971551359965"
+        href={`https://wa.me/971551359965?text=${encodeURIComponent("Hello Spectra Interior! 👋 I'd love to learn more about your interior design services. Could you please share some details?")}`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"
