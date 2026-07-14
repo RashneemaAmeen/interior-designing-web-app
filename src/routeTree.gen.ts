@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ConsultationSuccessRouteImport } from './routes/consultation-success'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -21,6 +22,11 @@ import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticat
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConsultationSuccessRoute = ConsultationSuccessRouteImport.update({
+  id: '/consultation-success',
+  path: '/consultation-success',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -61,6 +67,7 @@ const AuthenticatedProjectsRoute = AuthenticatedProjectsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/consultation-success': typeof ConsultationSuccessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/api/create-checkout': typeof ApiCreateCheckoutRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/consultation-success': typeof ConsultationSuccessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/projects': typeof AuthenticatedProjectsRoute
   '/api/create-checkout': typeof ApiCreateCheckoutRoute
@@ -81,6 +89,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/consultation-success': typeof ConsultationSuccessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRoute
   '/api/create-checkout': typeof ApiCreateCheckoutRoute
@@ -92,6 +101,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/consultation-success'
     | '/sitemap.xml'
     | '/projects'
     | '/api/create-checkout'
@@ -101,6 +111,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/consultation-success'
     | '/sitemap.xml'
     | '/projects'
     | '/api/create-checkout'
@@ -111,6 +122,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/consultation-success'
     | '/sitemap.xml'
     | '/_authenticated/projects'
     | '/api/create-checkout'
@@ -122,6 +134,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ConsultationSuccessRoute: typeof ConsultationSuccessRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiCreateCheckoutRoute: typeof ApiCreateCheckoutRoute
   ApiRedesignRoomRoute: typeof ApiRedesignRoomRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/consultation-success': {
+      id: '/consultation-success'
+      path: '/consultation-success'
+      fullPath: '/consultation-success'
+      preLoaderRoute: typeof ConsultationSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ConsultationSuccessRoute: ConsultationSuccessRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiCreateCheckoutRoute: ApiCreateCheckoutRoute,
   ApiRedesignRoomRoute: ApiRedesignRoomRoute,
