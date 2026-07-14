@@ -1,0 +1,13 @@
+# Spectra Interior Designing
+
+> Luxury interior design studio based in Dubai, UAE. Residential, commercial, kitchen, bedroom, office design, 3D visualization, and an AI room designer tool.
+
+Spectra Interior Designing creates bespoke, timeless interiors across Dubai. Services include Residential Interior Design, Commercial Interior Design, Kitchen Design, Bedroom Design, Office Design, and 3D Visualization. The site also offers a free AI-powered room redesign tool and an online consultation booking flow with an AED 500 refundable deposit.
+
+## Pages
+
+- [Home](/): Overview of services, featured projects, about, testimonials, contact, and the AI Room Designer.
+
+## Optional
+
+- [Sitemap](/sitemap.xml): Machine-readable site index.
