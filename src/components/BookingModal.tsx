@@ -445,12 +445,12 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
                 {submitting ? (
                   <>
                     <Loader2 size={16} className="animate-spin" />
-                    Saving…
+                    Redirecting to payment…
                   </>
                 ) : (
                   <>
                     <Check size={16} />
-                    Confirm Consultation
+                    Pay AED 500 & Confirm
                   </>
                 )}
               </button>
