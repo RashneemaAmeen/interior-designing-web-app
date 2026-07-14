@@ -37,21 +37,77 @@ import project5Asset from "@/assets/project-5.jpg.asset.json";
 import project6Asset from "@/assets/project-6.jpg.asset.json";
 import locationMapAsset from "@/assets/location-map.jpg.asset.json";
 
+const SITE_URL = "https://spectra-interior-designing.lovable.app";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Spectra Interior Designing | Dubai Luxury Interiors" },
       { name: "description", content: "Spectra Interior Designing creates luxurious, timeless interiors in Dubai. Residential, commercial, kitchen, bedroom, office design and 3D visualization." },
+      { name: "keywords", content: "interior design Dubai, luxury interior design, villa interior design Dubai, residential interior design, commercial interior design, kitchen design Dubai, 3D visualization, AI interior design" },
       { property: "og:title", content: "Spectra Interior Designing | Dubai Luxury Interiors" },
       { property: "og:description", content: "Designing Spaces, Creating Memories. Luxury interior design studio in Dubai, UAE." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL },
       { property: "og:image", content: heroAsset.url },
+      { property: "og:locale", content: "en_AE" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: heroAsset.url },
+      { name: "geo.region", content: "AE-DU" },
+      { name: "geo.placename", content: "Dubai" },
+    ],
+    links: [
+      { rel: "canonical", href: SITE_URL },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Spectra Interior Designing",
+          url: SITE_URL,
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "HomeAndConstructionBusiness",
+          "@id": `${SITE_URL}/#business`,
+          name: "Spectra Interior Designing",
+          image: heroAsset.url,
+          url: SITE_URL,
+          telephone: "+971551359965",
+          email: "contact@spectrainterior.ae",
+          priceRange: "$$$",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Warehouse 01, Warsan 1 St, behind Dubai Textile City",
+            addressLocality: "Dubai",
+            addressRegion: "Dubai",
+            addressCountry: "AE",
+          },
+          areaServed: { "@type": "City", name: "Dubai" },
+          openingHoursSpecification: [
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+              opens: "09:00",
+              closes: "19:00",
+            },
+          ],
+          sameAs: [
+            "https://www.instagram.com/spectra_technical_services/",
+            "https://www.facebook.com/Spectratechnicalservices",
+          ],
+        }),
+      },
     ],
   }),
   component: Index,
 });
+
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -353,8 +409,9 @@ function Index() {
             Luxury Interior Design · Dubai
           </p>
           <h1 className="font-display text-4xl font-medium leading-tight text-cream sm:text-5xl md:text-6xl lg:text-7xl">
-            Spectra Interior Designing
+            Spectra Interior Designing — Luxury Interiors in Dubai
           </h1>
+
           <p className="mx-auto mt-6 max-w-2xl font-display text-xl font-light italic text-cream/90 sm:text-2xl md:text-3xl">
             Designing Spaces, Creating Memories
           </p>
