@@ -141,11 +141,21 @@ export const Route = createFileRoute("/api/verify-checkout")({
           }
         }
 
+        // Only expose PII once payment is confirmed. Before that, return a minimal
+        // envelope so a leaked session id can't be used to dump client details.
+        const safeConsultation = paid
+          ? consultation
+          : {
+              reference_number: consultation.reference_number,
+              status: consultation.status,
+              payment_status: consultation.payment_status,
+            };
+
         return Response.json({
           paid,
-          consultation,
-          amount_total: session.amount_total,
-          currency: session.currency,
+          consultation: safeConsultation,
+          amount_total: paid ? session.amount_total : null,
+          currency: paid ? session.currency : null,
         });
       },
     },

@@ -26,14 +26,19 @@ export const Route = createFileRoute("/api/create-checkout")({
         if (!stripeKey) return Response.json({ error: "Stripe not configured" }, { status: 500 });
 
         let reference_number: string | undefined;
+        let client_email: string | undefined;
         try {
-          const body = (await request.json()) as { reference_number?: string };
+          const body = (await request.json()) as { reference_number?: string; client_email?: string };
           reference_number = body.reference_number;
+          client_email = body.client_email;
         } catch {
           return Response.json({ error: "Invalid body" }, { status: 400 });
         }
         if (!reference_number || !/^SPC-\d{8}-[A-Z0-9]{4,10}$/.test(reference_number)) {
           return Response.json({ error: "Invalid reference" }, { status: 400 });
+        }
+        if (!client_email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(client_email) || client_email.length > 254) {
+          return Response.json({ error: "Invalid email" }, { status: 400 });
         }
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -45,6 +50,10 @@ export const Route = createFileRoute("/api/create-checkout")({
           .maybeSingle();
 
         if (fetchErr || !consultation) {
+          return Response.json({ error: "Consultation not found" }, { status: 404 });
+        }
+        // Ownership check: caller must supply the email tied to the reference
+        if ((consultation.client_email ?? "").toLowerCase() !== client_email.trim().toLowerCase()) {
           return Response.json({ error: "Consultation not found" }, { status: 404 });
         }
         if (consultation.payment_status === "paid") {

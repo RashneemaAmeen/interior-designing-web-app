@@ -247,7 +247,7 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
       const checkoutRes = await fetch("/api/create-checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ reference_number: ref }),
+        body: JSON.stringify({ reference_number: ref, client_email: details.email.trim() }),
       });
       const checkoutJson = (await checkoutRes.json()) as { url?: string; error?: string };
       if (!checkoutRes.ok || !checkoutJson.url) {
