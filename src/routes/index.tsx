@@ -409,8 +409,9 @@ function Index() {
             Luxury Interior Design · Dubai
           </p>
           <h1 className="font-display text-4xl font-medium leading-tight text-cream sm:text-5xl md:text-6xl lg:text-7xl">
-            Spectra Interior Designing
+            Spectra Interior Designing — Luxury Interiors in Dubai
           </h1>
+
           <p className="mx-auto mt-6 max-w-2xl font-display text-xl font-light italic text-cream/90 sm:text-2xl md:text-3xl">
             Designing Spaces, Creating Memories
           </p>
