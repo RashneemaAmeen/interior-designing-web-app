@@ -163,7 +163,3 @@ function row(label: string, value: unknown): string {
     <td style="padding:8px 12px;border:1px solid #eee">${escapeHtml(String(value))}</td>
   </tr>`;
 }
-      },
-    },
-  },
-});
