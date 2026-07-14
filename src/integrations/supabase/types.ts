@@ -57,8 +57,11 @@ export type Database = {
           client_phone: string
           consultation_datetime: string
           created_at: string
+          deposit_amount: number
+          deposit_currency: string
           id: string
           inspiration_images: Json
+          payment_status: string
           project_budget: string
           project_description: string | null
           project_type: string
@@ -66,6 +69,7 @@ export type Database = {
           reference_number: string
           service_type: string
           status: string
+          stripe_session_id: string | null
           user_id: string | null
         }
         Insert: {
@@ -75,8 +79,11 @@ export type Database = {
           client_phone: string
           consultation_datetime: string
           created_at?: string
+          deposit_amount?: number
+          deposit_currency?: string
           id?: string
           inspiration_images?: Json
+          payment_status?: string
           project_budget: string
           project_description?: string | null
           project_type: string
@@ -84,6 +91,7 @@ export type Database = {
           reference_number?: string
           service_type: string
           status?: string
+          stripe_session_id?: string | null
           user_id?: string | null
         }
         Update: {
@@ -93,8 +101,11 @@ export type Database = {
           client_phone?: string
           consultation_datetime?: string
           created_at?: string
+          deposit_amount?: number
+          deposit_currency?: string
           id?: string
           inspiration_images?: Json
+          payment_status?: string
           project_budget?: string
           project_description?: string | null
           project_type?: string
@@ -102,6 +113,7 @@ export type Database = {
           reference_number?: string
           service_type?: string
           status?: string
+          stripe_session_id?: string | null
           user_id?: string | null
         }
         Relationships: []

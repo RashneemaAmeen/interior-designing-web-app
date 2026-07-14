@@ -242,19 +242,29 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
           user_id: uid,
         });
       if (insertError) throw insertError;
-      setReference(ref);
-      setConfirmed(true);
+
+      // Create Stripe Checkout session and redirect
+      const checkoutRes = await fetch("/api/create-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reference_number: ref }),
+      });
+      const checkoutJson = (await checkoutRes.json()) as { url?: string; error?: string };
+      if (!checkoutRes.ok || !checkoutJson.url) {
+        throw new Error(checkoutJson.error || "Could not start payment");
+      }
+      window.location.href = checkoutJson.url;
     } catch (err) {
-      console.error("[booking] insert failed:", err);
+      console.error("[booking] submit failed:", err);
       setError(
         err instanceof Error
-          ? `Could not save your booking: ${err.message}`
-          : "Could not save your booking. Please try again.",
+          ? `Could not proceed to payment: ${err.message}`
+          : "Could not proceed to payment. Please try again.",
       );
-    } finally {
       setSubmitting(false);
     }
   }
+
 
   if (!open) return null;
 
@@ -435,12 +445,12 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
                 {submitting ? (
                   <>
                     <Loader2 size={16} className="animate-spin" />
-                    Saving…
+                    Redirecting to payment…
                   </>
                 ) : (
                   <>
                     <Check size={16} />
-                    Confirm Consultation
+                    Pay AED 500 & Confirm
                   </>
                 )}
               </button>

@@ -10,15 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ConsultationSuccessRouteImport } from './routes/consultation-success'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiVerifyCheckoutRouteImport } from './routes/api/verify-checkout'
 import { Route as ApiRedesignRoomRouteImport } from './routes/api/redesign-room'
+import { Route as ApiCreateCheckoutRouteImport } from './routes/api/create-checkout'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConsultationSuccessRoute = ConsultationSuccessRouteImport.update({
+  id: '/consultation-success',
+  path: '/consultation-success',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -35,9 +43,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiVerifyCheckoutRoute = ApiVerifyCheckoutRouteImport.update({
+  id: '/api/verify-checkout',
+  path: '/api/verify-checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiRedesignRoomRoute = ApiRedesignRoomRouteImport.update({
   id: '/api/redesign-room',
   path: '/api/redesign-room',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCreateCheckoutRoute = ApiCreateCheckoutRouteImport.update({
+  id: '/api/create-checkout',
+  path: '/api/create-checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedProjectsRoute = AuthenticatedProjectsRouteImport.update({
@@ -49,47 +67,78 @@ const AuthenticatedProjectsRoute = AuthenticatedProjectsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/consultation-success': typeof ConsultationSuccessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/projects': typeof AuthenticatedProjectsRoute
+  '/api/create-checkout': typeof ApiCreateCheckoutRoute
   '/api/redesign-room': typeof ApiRedesignRoomRoute
+  '/api/verify-checkout': typeof ApiVerifyCheckoutRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/consultation-success': typeof ConsultationSuccessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/projects': typeof AuthenticatedProjectsRoute
+  '/api/create-checkout': typeof ApiCreateCheckoutRoute
   '/api/redesign-room': typeof ApiRedesignRoomRoute
+  '/api/verify-checkout': typeof ApiVerifyCheckoutRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/consultation-success': typeof ConsultationSuccessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRoute
+  '/api/create-checkout': typeof ApiCreateCheckoutRoute
   '/api/redesign-room': typeof ApiRedesignRoomRoute
+  '/api/verify-checkout': typeof ApiVerifyCheckoutRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/sitemap.xml' | '/projects' | '/api/redesign-room'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/consultation-success'
+    | '/sitemap.xml'
+    | '/projects'
+    | '/api/create-checkout'
+    | '/api/redesign-room'
+    | '/api/verify-checkout'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/sitemap.xml' | '/projects' | '/api/redesign-room'
+  to:
+    | '/'
+    | '/auth'
+    | '/consultation-success'
+    | '/sitemap.xml'
+    | '/projects'
+    | '/api/create-checkout'
+    | '/api/redesign-room'
+    | '/api/verify-checkout'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/consultation-success'
     | '/sitemap.xml'
     | '/_authenticated/projects'
+    | '/api/create-checkout'
     | '/api/redesign-room'
+    | '/api/verify-checkout'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ConsultationSuccessRoute: typeof ConsultationSuccessRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiCreateCheckoutRoute: typeof ApiCreateCheckoutRoute
   ApiRedesignRoomRoute: typeof ApiRedesignRoomRoute
+  ApiVerifyCheckoutRoute: typeof ApiVerifyCheckoutRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/consultation-success': {
+      id: '/consultation-success'
+      path: '/consultation-success'
+      fullPath: '/consultation-success'
+      preLoaderRoute: typeof ConsultationSuccessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -122,11 +178,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/verify-checkout': {
+      id: '/api/verify-checkout'
+      path: '/api/verify-checkout'
+      fullPath: '/api/verify-checkout'
+      preLoaderRoute: typeof ApiVerifyCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/redesign-room': {
       id: '/api/redesign-room'
       path: '/api/redesign-room'
       fullPath: '/api/redesign-room'
       preLoaderRoute: typeof ApiRedesignRoomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/create-checkout': {
+      id: '/api/create-checkout'
+      path: '/api/create-checkout'
+      fullPath: '/api/create-checkout'
+      preLoaderRoute: typeof ApiCreateCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/projects': {
@@ -154,19 +224,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ConsultationSuccessRoute: ConsultationSuccessRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiCreateCheckoutRoute: ApiCreateCheckoutRoute,
   ApiRedesignRoomRoute: ApiRedesignRoomRoute,
+  ApiVerifyCheckoutRoute: ApiVerifyCheckoutRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
