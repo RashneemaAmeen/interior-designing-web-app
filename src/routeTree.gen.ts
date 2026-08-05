@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiVerifyCheckoutRouteImport } from './routes/api/verify-checkout'
 import { Route as ApiRedesignRoomRouteImport } from './routes/api/redesign-room'
 import { Route as ApiCreateCheckoutRouteImport } from './routes/api/create-checkout'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedProjectsRouteImport } from './routes/_authenticated/projects'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -58,6 +59,11 @@ const ApiCreateCheckoutRoute = ApiCreateCheckoutRouteImport.update({
   path: '/api/create-checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedProjectsRoute = AuthenticatedProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/consultation-success': typeof ConsultationSuccessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/projects': typeof AuthenticatedProjectsRoute
+  '/api/chat': typeof ApiChatRoute
   '/api/create-checkout': typeof ApiCreateCheckoutRoute
   '/api/redesign-room': typeof ApiRedesignRoomRoute
   '/api/verify-checkout': typeof ApiVerifyCheckoutRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/consultation-success': typeof ConsultationSuccessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/projects': typeof AuthenticatedProjectsRoute
+  '/api/chat': typeof ApiChatRoute
   '/api/create-checkout': typeof ApiCreateCheckoutRoute
   '/api/redesign-room': typeof ApiRedesignRoomRoute
   '/api/verify-checkout': typeof ApiVerifyCheckoutRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/consultation-success': typeof ConsultationSuccessRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/projects': typeof AuthenticatedProjectsRoute
+  '/api/chat': typeof ApiChatRoute
   '/api/create-checkout': typeof ApiCreateCheckoutRoute
   '/api/redesign-room': typeof ApiRedesignRoomRoute
   '/api/verify-checkout': typeof ApiVerifyCheckoutRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
     | '/consultation-success'
     | '/sitemap.xml'
     | '/projects'
+    | '/api/chat'
     | '/api/create-checkout'
     | '/api/redesign-room'
     | '/api/verify-checkout'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
     | '/consultation-success'
     | '/sitemap.xml'
     | '/projects'
+    | '/api/chat'
     | '/api/create-checkout'
     | '/api/redesign-room'
     | '/api/verify-checkout'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
     | '/consultation-success'
     | '/sitemap.xml'
     | '/_authenticated/projects'
+    | '/api/chat'
     | '/api/create-checkout'
     | '/api/redesign-room'
     | '/api/verify-checkout'
@@ -136,6 +148,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ConsultationSuccessRoute: typeof ConsultationSuccessRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiChatRoute: typeof ApiChatRoute
   ApiCreateCheckoutRoute: typeof ApiCreateCheckoutRoute
   ApiRedesignRoomRoute: typeof ApiRedesignRoomRoute
   ApiVerifyCheckoutRoute: typeof ApiVerifyCheckoutRoute
@@ -199,6 +212,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCreateCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/projects': {
       id: '/_authenticated/projects'
       path: '/projects'
@@ -226,6 +246,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ConsultationSuccessRoute: ConsultationSuccessRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiChatRoute: ApiChatRoute,
   ApiCreateCheckoutRoute: ApiCreateCheckoutRoute,
   ApiRedesignRoomRoute: ApiRedesignRoomRoute,
   ApiVerifyCheckoutRoute: ApiVerifyCheckoutRoute,
@@ -233,13 +254,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
