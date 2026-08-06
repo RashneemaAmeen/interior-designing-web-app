@@ -51,6 +51,7 @@ export type Database = {
       }
       consultations: {
         Row: {
+          archived: boolean
           assigned_designer: string | null
           client_email: string
           client_name: string
@@ -74,6 +75,7 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          archived?: boolean
           assigned_designer?: string | null
           client_email: string
           client_name: string
@@ -97,6 +99,7 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          archived?: boolean
           assigned_designer?: string | null
           client_email?: string
           client_name?: string
@@ -120,6 +123,115 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      projects: {
+        Row: {
+          budget: string | null
+          client_email: string | null
+          client_name: string
+          client_phone: string | null
+          consultation_id: string | null
+          created_at: string
+          designer: string | null
+          expected_completion: string | null
+          id: string
+          progress: number
+          project_name: string
+          project_value: number
+          stage: string
+          start_date: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          budget?: string | null
+          client_email?: string | null
+          client_name: string
+          client_phone?: string | null
+          consultation_id?: string | null
+          created_at?: string
+          designer?: string | null
+          expected_completion?: string | null
+          id?: string
+          progress?: number
+          project_name: string
+          project_value?: number
+          stage?: string
+          start_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          budget?: string | null
+          client_email?: string | null
+          client_name?: string
+          client_phone?: string | null
+          consultation_id?: string | null
+          created_at?: string
+          designer?: string | null
+          expected_completion?: string | null
+          id?: string
+          progress?: number
+          project_name?: string
+          project_value?: number
+          stage?: string
+          start_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "projects_consultation_id_fkey"
+            columns: ["consultation_id"]
+            isOneToOne: false
+            referencedRelation: "consultations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_visits: {
+        Row: {
+          address: string
+          client_name: string
+          created_at: string
+          designer: string | null
+          id: string
+          project_id: string | null
+          status: string
+          updated_at: string
+          visit_at: string
+        }
+        Insert: {
+          address: string
+          client_name: string
+          created_at?: string
+          designer?: string | null
+          id?: string
+          project_id?: string | null
+          status?: string
+          updated_at?: string
+          visit_at: string
+        }
+        Update: {
+          address?: string
+          client_name?: string
+          created_at?: string
+          designer?: string | null
+          id?: string
+          project_id?: string | null
+          status?: string
+          updated_at?: string
+          visit_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "site_visits_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
