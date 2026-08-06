@@ -235,7 +235,7 @@ export const updateProject = createServerFn({ method: "POST" })
         break;
     }
 
-    const { error } = await supabaseAdmin.from("projects").update(patch).eq("id", data.id);
+    const { error } = await supabaseAdmin.from("projects").update(patch as never).eq("id", data.id);
     if (error) throw error;
     return { ok: true as const };
   });
@@ -263,7 +263,7 @@ export const updateEnquiry = createServerFn({ method: "POST" })
             ...(data.datetime ? { consultation_datetime: data.datetime } : {}),
           };
 
-    const { error } = await supabaseAdmin.from("consultations").update(patch).eq("id", data.id);
+    const { error } = await supabaseAdmin.from("consultations").update(patch as never).eq("id", data.id);
     if (error) throw error;
     return { ok: true as const };
   });
@@ -290,7 +290,7 @@ export const updateVisit = createServerFn({ method: "POST" })
           ? { status: "cancelled" }
           : { visit_at: data.datetime ?? new Date(Date.now() + 864e5).toISOString() };
 
-    const { error } = await supabaseAdmin.from("site_visits").update(patch).eq("id", data.id);
+    const { error } = await supabaseAdmin.from("site_visits").update(patch as never).eq("id", data.id);
     if (error) throw error;
     return { ok: true as const };
   });
